@@ -22,8 +22,8 @@ my $tabelog_client = AnyEvent::Tabelog::Search->new($config->{tabelog}{api_key})
 my $twitter_client = AnyEvent::Twitter->new(%{$config->{twitter_bot}{oauth}});
 
 
-my $hash_tag             = '#tkdhoncho';
-my $bot_name             = '@tkdhoncho_bot';
+my $hash_tag             = ''; # 'tkdhoncho';
+my $bot_name             = ''; # '@tkdhoncho_bot';
 my $twitter_filter_track = join ',', $hash_tag, $bot_name;
 my $twitter_lunch_regexp;
 
@@ -125,7 +125,7 @@ $twitter_loop = sub {
         },
         on_eof => sub {
             my $handle = shift;
-            $log_dispatcher->error(get_new() . qq( [error] ${handle} "twitter_listener on_eof"));
+            $log_dispatcher->error(get_now() . qq( [error] ${handle} "twitter_listener on_eof"));
             my $t; $t = AE::timer 5, 0, sub {
                 undef $t;
                 $twitter_loop->($retry_message);

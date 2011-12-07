@@ -1,0 +1,23 @@
+# NAME
+
+APP-TkdhonchoBot - Twitter bot who tweet some informations about （上越市）高田本町商店街
+
+# SYNOPSIS
+
+  # run script
+
+    $ perl app.pl
+
+
+# DESCRIPTION
+
+App-TkdhonchoBot is Twitter bot. she tweet some informations about 高田本町商店街.
+
+- she retweets a tweet containing the hashtag "#tkdhoncho"
+
+- she replies to introduce a eating place when you send her the mention containing a word "lunch"
+
+
+# SEE ALSO
+
+[http://twitter.com/tkdhoncho_bot](http://twitter.com/tkdhoncho_bot)

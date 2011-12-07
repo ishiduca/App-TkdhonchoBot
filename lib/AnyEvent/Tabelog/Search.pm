@@ -7,14 +7,13 @@ use AnyEvent;
 use AnyEvent::HTTP qw(http_request);
 use XML::Simple;
 
-our $VERSION  = '0.01';
-my  $api_uri  = 'http://api.tabelog.com/Ver2.1/';
+our $VERSION  = '0.02';
 my  $api_mode = 'RestaurantSearch';
 
 sub new {
     my $class   = shift;
-	my $api_key = shift || Carp::croak qq(! failed: 1st argument-- "api_key" not found\n);
-;
+    my $api_key = shift || Carp::croak qq(! failed: 1st argument-- "api_key" not found\n);
+
     bless { api_key => $api_key }, $class;
 }
 
@@ -26,10 +25,9 @@ sub get {
     my $mode = delete $args{mode} || $api_mode;
 
     Carp::croak '! failed: "mode" is wrong( or not found)' unless $mode =~ /^(RestaurantSearch|ReviewSearch|ReviewImageSearch)$/;
-    $api_uri =~ s/Ver2\.1/Ver1/ if $mode =~ /^(ReviewSearch|ReviewImageSearch)$/;
 
-
-    my $uri  = URI->new("${api_uri}${mode}/");
+    my $api_uri = _get_api_uri($mode);
+    my $uri     = URI->new("${api_uri}${mode}/");
 
     my $on_error  = delete $args{on_error}  || sub { die @_; return };
     my $on_header = delete $args{on_header} || sub {
@@ -55,6 +53,15 @@ sub get {
 
 }
 
+sub _get_api_uri {
+    my $mode     = shift;
+    my $api_uri  = 'http://api.tabelog.com';
+
+    ($mode eq 'RestaurantSearch')
+        ? "${api_uri}/Ver2.1/"
+        : "${api_uri}/Ver1/"
+    ;
+}
 
 1;
 
